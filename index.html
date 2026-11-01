@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Lục Trà</title>
+  <!-- Tên + biểu tượng khi ghim ra màn hình chính -->
+  <meta name="apple-mobile-web-app-title" content="Lục Trà">
+  <meta name="application-name" content="Lục Trà">
+  <meta name="theme-color" content="#0551AE">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="icons/icon-48.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <style>
+    html, body { margin: 0; height: 100%; font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background: #fff; color: #0A2B5E; }
+    main { min-height: 100%; display: grid; place-items: center; text-align: center; padding: 24px; box-sizing: border-box; }
+    img { width: 112px; height: 112px; border-radius: 24px; box-shadow: 0 6px 24px rgba(5, 81, 174, .18); }
+    h1 { font-size: 20px; margin: 18px 0 6px; }
+    p { margin: 6px 0; color: #4a5b74; font-size: 15px; line-height: 1.45; }
+    a.btn { display: inline-block; margin-top: 14px; padding: 12px 22px; border-radius: 12px; background: #0551AE; color: #fff; font-weight: 700; text-decoration: none; }
+    .warn { max-width: 420px; background: #FFF4E5; color: #7A4A00; border-radius: 12px; padding: 12px 14px; text-align: left; }
+    code { background: #f1f4f8; padding: 1px 6px; border-radius: 4px; }
+    .pin { max-width: 420px; background: #EEF4FC; border-radius: 12px; padding: 12px 16px; text-align: left; }
+  </style>
+</head>
+<body>
+<main>
+  <div>
+    <img src="icons/icon-180.png" alt="Logo Lục Trà Thăng Hoa">
+    <h1>Lục Trà Thăng Hoa</h1>
+    <p id="msg">Đang mở ứng dụng…</p>
+    <a class="btn" id="go" href="#" hidden>Mở ứng dụng</a>
+  </div>
+</main>
+<script>
+  /* ====== CHỈ CẦN SỬA 1 DÒNG NÀY: dán link /exec của Web App (Triển khai → Quản lý bản triển khai → URL ứng dụng web) ====== */
+  var APP_URL = 'https://script.google.com/macros/s/AKfycbzdSZd0E-_YxLFytRxlm0aHcP99yuznn0ty9d8zCvVXihLuCqEm8ODPwF0_mSCiJObvlw/exec';
+  /* ======================================================================================================================== */
+
+  (function () {
+    var ok = /^https:\/\/script\.google\.com\/.+\/exec$/.test(APP_URL);
+    var msg = document.getElementById('msg');
+    var go = document.getElementById('go');
+    if (!ok) {
+      msg.outerHTML = '<p class="warn">Trang ghim chưa được cài link ứng dụng. Chủ quán mở file <code>trang-ghim/index.html</code>, ' +
+        'thay <code>DAN_LINK_EXEC_VAO_DAY</code> bằng link <code>…/exec</code> của Web App.</p>';
+      return;
+    }
+    // Giữ lại tham số (ví dụ ?app=ketca để mở thẳng Kết ca)
+    var target = APP_URL + (location.search || '');
+    go.href = target;
+    go.hidden = false;
+    // CHẾ ĐỘ GHIM: mở link có "#ghim" → KHÔNG chuyển đi, hiện hướng dẫn ghim.
+    // Đồng thời bỏ "#ghim" khỏi địa chỉ để biểu tượng được ghim mở lên là tự vào ứng dụng.
+    if (location.hash === '#ghim') {
+      try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+      var ios = /iPhone|iPad|iPod/.test(navigator.userAgent);
+      msg.outerHTML = '<div class="pin"><p><strong>Ghim ra màn hình chính</strong></p>' +
+        (ios ? '<p>Bấm nút <strong>Chia sẻ</strong> (ô vuông có mũi tên lên) → <strong>Thêm vào MH chính</strong> → <strong>Thêm</strong>.</p>'
+             : '<p>Bấm nút <strong>⋮</strong> → <strong>Thêm vào màn hình chính</strong> (hoặc <strong>Cài đặt ứng dụng</strong>) → <strong>Thêm</strong>.</p>') +
+        '<p>Biểu tượng logo quán tên “Lục Trà” sẽ xuất hiện. Bấm vào là mở ứng dụng.</p></div>';
+      return;
+    }
+    // Mở cùng tab (dùng chung đăng nhập Google của trình duyệt)
+    location.replace(target);
+  })();
+</script>
+</body>
+</html>
