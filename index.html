@@ -65,11 +65,21 @@
       return;
     }
 
-    // Mở từ BIỂU TƯỢNG đã ghim (địa chỉ có ?go=1) → vào thẳng ứng dụng, cùng tab (dùng chung đăng nhập Google)
-    if (params.get('go') === '1' && location.hash !== '#ghim') {
+    // Đang ghim trong tab này? (mở ?ghim=1 / #ghim, hoặc đã hiện trang ghim trước đó trong CÙNG tab → tải lại vẫn đứng yên)
+    var pinning = params.get('ghim') === '1' || location.hash === '#ghim';
+    try {
+      if (pinning) sessionStorage.setItem('ltg_pin', '1');
+      else if (sessionStorage.getItem('ltg_pin') === '1') pinning = true;
+    } catch (e) {}
+
+    // Mở từ BIỂU TƯỢNG đã ghim (?go=1, tab mới) → vào thẳng ứng dụng, cùng tab (dùng chung đăng nhập Google)
+    if (params.get('go') === '1' && !pinning) {
       location.replace(target);
+      // Quay lại (nút Back) về trang này → hiện trang ghim thay vì màn hình "Đang mở…"
+      window.addEventListener('pageshow', function (ev) { if (ev.persisted) location.reload(); });
       return;
     }
+    try { sessionStorage.setItem('ltg_pin', '1'); } catch (e) {}
 
     // Mở link trang ghim bình thường → ĐỨNG YÊN, hiện hướng dẫn ghim.
     // Đổi địa chỉ thành ?go=1 để biểu tượng ghim ra màn hình chính mở lên là vào thẳng ứng dụng.
