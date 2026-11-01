@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Lục Trà</title>
+  <title>Lục Trà Thăng Hoa Bến Cát</title>
   <!-- Tên + biểu tượng khi ghim ra màn hình chính -->
-  <meta name="apple-mobile-web-app-title" content="Lục Trà">
-  <meta name="application-name" content="Lục Trà">
+  <meta name="apple-mobile-web-app-title" content="Lục Trà Thăng Hoa Bến Cát">
+  <meta name="application-name" content="Lục Trà Thăng Hoa Bến Cát">
   <meta name="theme-color" content="#0551AE">
   <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
@@ -14,57 +14,84 @@
   <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
   <link rel="manifest" href="manifest.webmanifest">
   <style>
-    html, body { margin: 0; height: 100%; font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background: #fff; color: #0A2B5E; }
-    main { min-height: 100%; display: grid; place-items: center; text-align: center; padding: 24px; box-sizing: border-box; }
-    img { width: 112px; height: 112px; border-radius: 24px; box-shadow: 0 6px 24px rgba(5, 81, 174, .18); }
-    h1 { font-size: 20px; margin: 18px 0 6px; }
-    p { margin: 6px 0; color: #4a5b74; font-size: 15px; line-height: 1.45; }
-    a.btn { display: inline-block; margin-top: 14px; padding: 12px 22px; border-radius: 12px; background: #0551AE; color: #fff; font-weight: 700; text-decoration: none; }
-    .warn { max-width: 420px; background: #FFF4E5; color: #7A4A00; border-radius: 12px; padding: 12px 14px; text-align: left; }
+    html, body { margin: 0; min-height: 100%; font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background: #fff; color: #0A2B5E; }
+    main { min-height: 100vh; display: grid; place-items: center; text-align: center; padding: 24px 18px; box-sizing: border-box; }
+    .wrap { width: 100%; max-width: 420px; }
+    .logo { width: 112px; height: 112px; border-radius: 24px; box-shadow: 0 6px 24px rgba(5, 81, 174, .18); }
+    h1 { font-size: 21px; margin: 16px 0 4px; }
+    .sub { margin: 0 0 16px; color: #4a5b74; font-size: 14.5px; }
+    .card { background: #EEF4FC; border-radius: 14px; padding: 14px 16px; text-align: left; }
+    .card h2 { font-size: 16px; margin: 0 0 8px; }
+    ol { margin: 0; padding-left: 20px; }
+    li { margin: 6px 0; font-size: 15px; line-height: 1.45; color: #23344d; }
+    .note { margin: 10px 0 0; font-size: 13px; color: #4a5b74; line-height: 1.45; }
+    a.btn { display: block; margin-top: 16px; padding: 14px 22px; border-radius: 12px; background: #0551AE; color: #fff; font-weight: 700; font-size: 16px; text-decoration: none; }
+    .warn { background: #FFF4E5; color: #7A4A00; border-radius: 12px; padding: 12px 14px; text-align: left; }
+    .muted { margin-top: 10px; font-size: 13px; color: #6b7a90; }
     code { background: #f1f4f8; padding: 1px 6px; border-radius: 4px; }
-    .pin { max-width: 420px; background: #EEF4FC; border-radius: 12px; padding: 12px 16px; text-align: left; }
+    .hidden { display: none; }
   </style>
 </head>
 <body>
 <main>
-  <div>
-    <img src="icons/icon-180.png" alt="Logo Lục Trà Thăng Hoa">
-    <h1>Lục Trà Thăng Hoa</h1>
-    <p id="msg">Đang mở ứng dụng…</p>
-    <a class="btn" id="go" href="#" hidden>Mở ứng dụng</a>
+  <div class="wrap">
+    <img class="logo" src="icons/icon-180.png" alt="Logo Lục Trà Thăng Hoa">
+    <h1>Lục Trà Thăng Hoa Bến Cát</h1>
+    <p class="sub" id="sub">Đang mở ứng dụng…</p>
+    <div id="pin" class="hidden">
+      <div class="card">
+        <h2>Ghim ra màn hình chính</h2>
+        <ol id="steps"></ol>
+        <p class="note">Ô tên có thể sửa trước khi bấm <strong>Thêm</strong>. Biểu tượng là <strong>logo quán</strong>; bấm vào là mở thẳng ứng dụng.</p>
+      </div>
+      <a class="btn" id="go" href="#">Mở ứng dụng ngay</a>
+      <p class="muted">Đã ghim rồi? Dùng biểu tượng logo ngoài màn hình chính để mở.</p>
+    </div>
   </div>
 </main>
 <script>
-  /* ====== CHỈ CẦN SỬA 1 DÒNG NÀY: dán link /exec của Web App (Triển khai → Quản lý bản triển khai → URL ứng dụng web) ====== */
+  /* ====== Link /exec của Web App (Triển khai → Quản lý bản triển khai → URL ứng dụng web) ====== */
   var APP_URL = 'https://script.google.com/macros/s/AKfycbzdSZd0E-_YxLFytRxlm0aHcP99yuznn0ty9d8zCvVXihLuCqEm8ODPwF0_mSCiJObvlw/exec';
-  /* ======================================================================================================================== */
+  /* ============================================================================================ */
 
   (function () {
-    var ok = /^https:\/\/script\.google\.com\/.+\/exec$/.test(APP_URL);
-    var msg = document.getElementById('msg');
-    var go = document.getElementById('go');
-    if (!ok) {
-      msg.outerHTML = '<p class="warn">Trang ghim chưa được cài link ứng dụng. Chủ quán mở file <code>trang-ghim/index.html</code>, ' +
+    var params = new URLSearchParams(location.search);
+    var app = params.get('app') || '';                 // ?app=ketca | ship | nhansu → mở thẳng hệ thống đó
+    var target = APP_URL + (app ? '?app=' + encodeURIComponent(app) : '');
+    var sub = document.getElementById('sub');
+    if (!/^https:\/\/script\.google\.com\/.+\/exec$/.test(APP_URL)) {
+      sub.outerHTML = '<p class="warn">Trang ghim chưa được cài link ứng dụng. Mở <code>index.html</code>, ' +
         'thay <code>DAN_LINK_EXEC_VAO_DAY</code> bằng link <code>…/exec</code> của Web App.</p>';
       return;
     }
-    // Giữ lại tham số (ví dụ ?app=ketca để mở thẳng Kết ca)
-    var target = APP_URL + (location.search || '');
-    go.href = target;
-    go.hidden = false;
-    // CHẾ ĐỘ GHIM: mở link có "#ghim" → KHÔNG chuyển đi, hiện hướng dẫn ghim.
-    // Đồng thời bỏ "#ghim" khỏi địa chỉ để biểu tượng được ghim mở lên là tự vào ứng dụng.
-    if (location.hash === '#ghim') {
-      try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
-      var ios = /iPhone|iPad|iPod/.test(navigator.userAgent);
-      msg.outerHTML = '<div class="pin"><p><strong>Ghim ra màn hình chính</strong></p>' +
-        (ios ? '<p>Bấm nút <strong>Chia sẻ</strong> (ô vuông có mũi tên lên) → <strong>Thêm vào MH chính</strong> → <strong>Thêm</strong>.</p>'
-             : '<p>Bấm nút <strong>⋮</strong> → <strong>Thêm vào màn hình chính</strong> (hoặc <strong>Cài đặt ứng dụng</strong>) → <strong>Thêm</strong>.</p>') +
-        '<p>Biểu tượng logo quán tên “Lục Trà” sẽ xuất hiện. Bấm vào là mở ứng dụng.</p></div>';
+
+    // Mở từ BIỂU TƯỢNG đã ghim (địa chỉ có ?go=1) → vào thẳng ứng dụng, cùng tab (dùng chung đăng nhập Google)
+    if (params.get('go') === '1' && location.hash !== '#ghim') {
+      location.replace(target);
       return;
     }
-    // Mở cùng tab (dùng chung đăng nhập Google của trình duyệt)
-    location.replace(target);
+
+    // Mở link trang ghim bình thường → ĐỨNG YÊN, hiện hướng dẫn ghim.
+    // Đổi địa chỉ thành ?go=1 để biểu tượng ghim ra màn hình chính mở lên là vào thẳng ứng dụng.
+    try {
+      history.replaceState(null, '', location.pathname + '?go=1' + (app ? '&app=' + encodeURIComponent(app) : ''));
+    } catch (e) {}
+    var ua = navigator.userAgent;
+    var ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && 'ontouchend' in document);
+    var inApp = /Zalo|FBAN|FBAV|Instagram|Line\//i.test(ua);
+    var steps = inApp
+      ? ['Trình duyệt trong Zalo/Facebook <strong>không ghim được</strong>. Bấm <strong>⋯</strong> (góc trên) → <strong>Mở bằng trình duyệt</strong> (Safari / Chrome), rồi làm lại.']
+      : ios
+        ? ['Bấm nút <strong>Chia sẻ</strong> (ô vuông có mũi tên lên, ở thanh dưới hoặc trên của Safari).',
+           'Kéo xuống, chọn <strong>Thêm vào MH chính</strong>.',
+           'Bấm <strong>Thêm</strong> (góc trên bên phải).']
+        : ['Bấm nút <strong>⋮</strong> (góc trên bên phải của Chrome).',
+           'Chọn <strong>Thêm vào màn hình chính</strong> (hoặc <strong>Cài đặt ứng dụng</strong>).',
+           'Bấm <strong>Thêm</strong>.'];
+    document.getElementById('steps').innerHTML = steps.map(function (s) { return '<li>' + s + '</li>'; }).join('');
+    document.getElementById('go').href = target;
+    sub.textContent = app === 'ketca' ? 'Kết ca' : app === 'ship' ? 'Tính ship' : app === 'nhansu' ? 'Nhân sự' : 'Tính ship · Kết ca · Nhân sự';
+    document.getElementById('pin').classList.remove('hidden');
   })();
 </script>
 </body>

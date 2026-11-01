@@ -1,14 +1,29 @@
 {
-  "name": "Lục Trà Thăng Hoa",
-  "short_name": "Lục Trà",
-  "start_url": "./index.html",
+  "name": "Lục Trà Thăng Hoa Bến Cát",
+  "short_name": "Lục Trà Thăng Hoa Bến Cát",
+  "start_url": "./?go=1",
   "scope": "./",
   "display": "browser",
   "background_color": "#ffffff",
   "theme_color": "#0551AE",
   "icons": [
-    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }
